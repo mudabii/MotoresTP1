@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
     public Vector3 newpos;
     public float speed;
+    public Rigidbody rigidBody;
+
+    public int coinscollected;
     void Start()
     {
-        Debug.Log("Game start");
+        rigidBody = GetComponent<Rigidbody>();
 
         transform.position = newpos;
 
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (Input.GetKey(KeyCode.W))
@@ -35,5 +38,13 @@ public class movement : MonoBehaviour
             transform.Translate(speed, 0f, 0f);
         }
 
+        void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Coin"))
+            {
+                Destroy(collision.gameObject);
+                coinscollected++; 
+            }
+        }
     }
 }
